@@ -99,7 +99,11 @@ def get_valid_index(tasks, prompt):
         # Print a friendly message instead of a scary error traceback.
         print("That's not a valid number.")
 
-        # Return None to signal "no valid index" to the caller.
+        # Explicitly return None to signal "no valid index" to the caller.
+        # (Python functions return None automatically if they fall off the
+        # end without a return, but writing it out makes the intent obvious
+        # and matches the explicit "return index" above.)
+        return None
 
 
 # Load any previously saved tasks from the file.

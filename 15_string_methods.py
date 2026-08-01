@@ -92,7 +92,10 @@ def get_valid_index(tasks, prompt):
         # Tell the user their input wasn't a valid number.
         print("That's not a valid number.")
 
-        # Return None to signal failure.
+        # Explicitly return None to signal failure. (Python would return
+        # None automatically here anyway, but spelling it out makes the
+        # intent clear and matches the explicit "return index" above.)
+        return None
 
 
 # Load any previously saved tasks from the JSON file.
