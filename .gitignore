@@ -1,1 +1,5 @@
 __pycache__/
+
+# Personal task-manager output from the exercise scripts — not code,
+# and previously contained real personal notes. Never commit this.
+tasks.json
