@@ -6,7 +6,7 @@
 # Ask the user to type their name. input() shows the text in quotes on screen,
 # then waits for the user to press Enter. Whatever they type gets stored in
 # the variable called "name". Think of a variable like a labeled box that holds
-# a value — here the box is labeled "name" and it holds whatever the user typed.
+# a value, here the box is labeled "name" and it holds whatever the user typed.
 name = input("What is your name? ")
 
 # Print a greeting to the screen. The + signs join (concatenate) pieces of text

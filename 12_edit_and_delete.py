@@ -59,7 +59,7 @@ def load_tasks():
         with open("tasks.json", "r") as file:
             return json.load(file)
 
-    # No file found — return an empty list (fresh start).
+    # No file found, return an empty list (fresh start).
     return []
 
 # Define a NEW function to change the name of an existing task.

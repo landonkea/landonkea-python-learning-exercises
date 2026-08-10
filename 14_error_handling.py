@@ -1,6 +1,6 @@
 # FILE: 14_error_handling.py
 # PURPOSE: This exercise adds error handling to the task manager. It teaches
-#          try/except — how to catch errors (like bad user input) instead of
+#          try/except, how to catch errors (like bad user input) instead of
 #          letting the program crash. The get_valid_index() function is the
 #          key new addition that safely handles invalid input.
 
@@ -11,7 +11,7 @@ import json
 import os
 
 
-# Define the Task class — same as exercise 13.
+# Define the Task class, same as exercise 13.
 class Task:
     # Constructor: runs when you create a new Task. Sets name and done status.
     def __init__(self, name, done=False):
@@ -66,19 +66,19 @@ def load_tasks():
             # Recreate Task objects from the saved dictionaries.
             return [Task(item["name"], item["done"]) for item in data]
 
-    # No file found — return an empty list.
+    # No file found, return an empty list.
     return []
 
 
 # NEW FUNCTION: Safely get a valid task index from the user.
-# This is the key addition in this exercise — it handles errors gracefully.
+# This is the key addition in this exercise, it handles errors gracefully.
 def get_valid_index(tasks, prompt):
     # "try" starts a block of code that might cause an error.
     # If an error happens, Python jumps to the "except" block instead of crashing.
     try:
         # Ask the user for a task number using the provided prompt text.
         # int() converts the text to a number. If the user types "abc",
-        # int() will raise a ValueError — and Python jumps to the "except" block.
+        # int() will raise a ValueError, and Python jumps to the "except" block.
         index = int(input(prompt)) - 1  # Subtract 1 to convert to 0-based index.
 
         # Check if the index is out of range (negative or too high).
@@ -90,7 +90,7 @@ def get_valid_index(tasks, prompt):
             # Return None to signal "no valid index" to the caller.
             return None
 
-        # The index is valid — return it.
+        # The index is valid, return it.
         return index
 
     # "except ValueError" catches the specific error that happens when int()
@@ -141,7 +141,7 @@ while True:
         for i in range(len(tasks)):
             tasks[i].display(i)
 
-        # Use get_valid_index() instead of raw int() — it handles bad input.
+        # Use get_valid_index() instead of raw int(), it handles bad input.
         # If the user types something invalid, we get None back.
         index = get_valid_index(tasks, "Which task number to complete? ")
 

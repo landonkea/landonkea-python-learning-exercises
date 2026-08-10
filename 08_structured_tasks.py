@@ -2,7 +2,7 @@
 # PURPOSE: This exercise upgrades the task list from plain strings to
 #          dictionaries. Each task is now a dict with a "name" and a "done"
 #          status. This teaches how dictionaries let you attach multiple
-#          pieces of info to one item — a foundation for real apps.
+#          pieces of info to one item, a foundation for real apps.
 
 # Create an empty list to hold all tasks. Each task will be a dictionary.
 tasks = []

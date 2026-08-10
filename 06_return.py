@@ -9,7 +9,7 @@ def build_greeting(name):
     # Check if the name matches "Landon".
     if name == "Landon":
         # "return" sends this text back to wherever the function was called.
-        # It does NOT print it — it hands the string back like passing a note.
+        # It does NOT print it, it hands the string back like passing a note.
         return "Hey, it's you!"
     else:
         # For any other name, return a generic greeting string.

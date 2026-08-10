@@ -12,7 +12,7 @@ import json
 import os
 
 
-# Define a class called "Task". A class is like a cookie cutter — it defines
+# Define a class called "Task". A class is like a cookie cutter, it defines
 # the shape of every Task object we create. The name "Task" is capitalized
 # by Python convention for class names.
 class Task:
@@ -83,7 +83,7 @@ def load_tasks():
             # item["name"] gets the name, item["done"] gets the done status.
             return [Task(item["name"], item["done"]) for item in data]
 
-    # No file found — return an empty list.
+    # No file found, return an empty list.
     return []
 
 
@@ -109,7 +109,7 @@ while True:
         name = input("Task name: ")
 
         # Create a new Task object and append it directly to the list.
-        # This replaces the old add_task() function — the class handles it now.
+        # This replaces the old add_task() function, the class handles it now.
         tasks.append(Task(name))
 
         save_tasks(tasks)

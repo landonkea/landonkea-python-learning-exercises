@@ -1,5 +1,5 @@
 # FILE: 10_save_tasks.py
-# PURPOSE: This exercise teaches file I/O (input/output) — saving data to a
+# PURPOSE: This exercise teaches file I/O (input/output), saving data to a
 #          file so it survives after the program ends. We use JSON, a common
 #          text format that's easy for both humans and machines to read.
 
@@ -22,7 +22,7 @@ def add_task(name):
 def list_tasks():
     # Loop through each task and print it with a checkbox.
     for task in tasks:
-        # Show "✓" if done, " " if not — the ternary expression.
+        # Show "✓" if done, " " if not, the ternary expression.
         status = "✓" if task["done"] else " "
 
         # Print the formatted task line.
@@ -34,12 +34,12 @@ def complete_task(name):
     for task in tasks:
         # If this task's name matches, mark it done.
         if task["name"] == name:
-            # Set done to True — this modifies the dictionary in place.
+            # Set done to True, this modifies the dictionary in place.
             task["done"] = True
 
 # Define a NEW function to save all tasks to a file.
 def save_tasks():
-    # "with open(...)" opens a file safely. "w" means write mode — it creates
+    # "with open(...)" opens a file safely. "w" means write mode, it creates
     # the file if it doesn't exist, or overwrites it if it does.
     # "as file" gives us a variable name to use for the opened file.
     # The "with" statement automatically closes the file when the block ends.

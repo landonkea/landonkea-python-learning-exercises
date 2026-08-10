@@ -39,7 +39,7 @@ def list_tasks():
 # Define a function to mark a task complete by its INDEX (position number).
 def complete_task(index):
     # Access the task at the given index and set its "done" value to True.
-    # This is faster than searching by name — we already know the position.
+    # This is faster than searching by name, we already know the position.
     tasks[index]["done"] = True
 
 # Define a function to mark a task as NOT complete (undo a completion).
@@ -66,7 +66,7 @@ def load_tasks():
             # json.load() reads JSON text and converts it back to Python data.
             return json.load(file)
 
-    # If no file exists, return an empty list — we have no saved tasks yet.
+    # If no file exists, return an empty list, we have no saved tasks yet.
     return []
 
 # Load any previously saved tasks. If the file exists, tasks gets populated.
@@ -74,7 +74,7 @@ def load_tasks():
 tasks = load_tasks()
 
 # Start an infinite loop that shows the menu until the user chooses to quit.
-# "while True" means "loop forever" — we'll use "break" to exit later.
+# "while True" means "loop forever", we'll use "break" to exit later.
 while True:
     # Print the menu options. "\n" at the start adds a blank line for readability.
     print("\n1. Add task")

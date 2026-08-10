@@ -1,4 +1,4 @@
-# landonkea-python-learning-exercises — Design & Workflow
+# landonkea-python-learning-exercises - Design & Workflow
 
 ## High-Level Overview
 

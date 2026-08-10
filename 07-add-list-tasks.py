@@ -16,7 +16,7 @@ def add_task(task_name):
     # becomes ["Buy groceries", "Call the bank"]. The list grows by one item.
     tasks.append(task_name)
 
-# Define a function that takes NO arguments — it uses the "tasks" list directly.
+# Define a function that takes NO arguments, it uses the "tasks" list directly.
 def list_tasks():
     # Loop through each task in the "tasks" list. On each pass, the variable
     # "task" holds the current task name as a string.

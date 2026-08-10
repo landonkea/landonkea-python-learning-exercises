@@ -18,7 +18,7 @@ def add_task(name):
 def list_tasks():
     # Loop through each task in the list.
     for task in tasks:
-        # Show "✓" if done, " " (space) if not done — the ternary trick.
+        # Show "✓" if done, " " (space) if not done, the ternary trick.
         status = "✓" if task["done"] else " "
 
         # Print the task with a checkbox prefix.
@@ -31,7 +31,7 @@ def complete_task(name):
         # Check if this task's name matches the name we're looking for.
         if task["name"] == name:
             # Set the "done" key to True. Since dictionaries are mutable,
-            # this changes the actual task in the list — no need to re-add it.
+            # this changes the actual task in the list, no need to re-add it.
             task["done"] = True
 
 # Add three sample tasks.

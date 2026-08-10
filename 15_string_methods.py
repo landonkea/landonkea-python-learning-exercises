@@ -1,7 +1,7 @@
 # FILE: 15_string_methods.py
 # PURPOSE: This exercise adds input validation using string methods. It teaches
 #          .strip() (removing whitespace) and how to prevent empty task names.
-#          This is the most polished version of the task manager — it has
+#          This is the most polished version of the task manager, it has
 #          error handling, input validation, and clean code structure.
 
 # Import json for saving/loading tasks to a JSON file.
@@ -11,7 +11,7 @@ import json
 import os
 
 
-# Define the Task class — same as exercises 13 and 14.
+# Define the Task class, same as exercises 13 and 14.
 class Task:
     # Constructor: creates a new Task with a name and done status.
     def __init__(self, name, done=False):
@@ -66,7 +66,7 @@ def load_tasks():
             # Recreate Task objects from the saved list of dicts.
             return [Task(item["name"], item["done"]) for item in data]
 
-    # No file exists — return an empty list.
+    # No file exists, return an empty list.
     return []
 
 
@@ -79,12 +79,12 @@ def get_valid_index(tasks, prompt):
 
         # Check if the index is within the valid range of the list.
         if index < 0 or index >= len(tasks):
-            # Index is out of bounds — tell the user and return None.
+            # Index is out of bounds, tell the user and return None.
             print("That task number doesn't exist.")
 
             return None
 
-        # Valid index — return it.
+        # Valid index, return it.
         return index
 
     # Catch the error that happens when the user types non-numeric text.
@@ -101,7 +101,7 @@ def get_valid_index(tasks, prompt):
 # Load any previously saved tasks from the JSON file.
 tasks = load_tasks()
 
-# Start the interactive menu loop — runs forever until user picks Quit.
+# Start the interactive menu loop, runs forever until user picks Quit.
 while True:
     # Print the menu options.
     print("\n1. Add task")
@@ -126,7 +126,7 @@ while True:
             # If the user typed nothing or just spaces, reject it.
             print("Task name can't be empty.")
         else:
-            # The name is valid — create the Task and save.
+            # The name is valid, create the Task and save.
             tasks.append(Task(name))
 
             save_tasks(tasks)
@@ -141,7 +141,7 @@ while True:
         for i in range(len(tasks)):
             tasks[i].display(i)
 
-        # Use safe input handling — returns None if input is bad.
+        # Use safe input handling, returns None if input is bad.
         index = get_valid_index(tasks, "Which task number to complete? ")
 
         if index is not None:
@@ -197,5 +197,5 @@ while True:
         break
 
     else:
-        # Invalid menu choice — remind the user.
+        # Invalid menu choice, remind the user.
         print("Invalid option, try again.")
