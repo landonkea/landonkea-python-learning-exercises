@@ -70,6 +70,22 @@ def load_tasks():
     return []
 
 
+# Function to clean up a raw task name typed by the user. Shared by both the
+# "add task" and "edit task" menu options so the same rule (strip whitespace,
+# reject blank names) only has to be written once.
+def clean_task_name(text):
+    # Remove leading/trailing whitespace first, same reason as the inline
+    # .strip() calls used to: a name of "  " should count as empty.
+    cleaned = text.strip()
+
+    if cleaned == "":
+        # Nothing left after stripping, signal "invalid" the same way
+        # get_valid_index does: return None and let the caller print the message.
+        return None
+
+    return cleaned
+
+
 # Function to safely get a valid task index from user input (same as exercise 14).
 def get_valid_index(tasks, prompt):
     # Try to convert user input to a valid index. Catch errors if input is bad.
@@ -98,104 +114,108 @@ def get_valid_index(tasks, prompt):
         return None
 
 
-# Load any previously saved tasks from the JSON file.
-tasks = load_tasks()
+# Only run the interactive menu when this file is executed directly
+# (e.g. `python 15_string_methods.py`), not when it's imported as a module
+# for testing. Without this guard, importing the file to test clean_task_name(),
+# Task, save_tasks(), etc. would immediately start the menu loop and block
+# waiting for keyboard input.
+if __name__ == "__main__":
+    # Load any previously saved tasks from the JSON file.
+    tasks = load_tasks()
 
-# Start the interactive menu loop, runs forever until user picks Quit.
-while True:
-    # Print the menu options.
-    print("\n1. Add task")
-    print("2. List tasks")
-    print("3. Mark task complete")
-    print("4. Mark task incomplete")
-    print("5. Edit task")
-    print("6. Delete task")
-    print("7. Quit")
+    # Start the interactive menu loop, runs forever until user picks Quit.
+    while True:
+        # Print the menu options.
+        print("\n1. Add task")
+        print("2. List tasks")
+        print("3. Mark task complete")
+        print("4. Mark task incomplete")
+        print("5. Edit task")
+        print("6. Delete task")
+        print("7. Quit")
 
-    # Get the user's menu choice as a string.
-    choice = input("Choose an option: ")
+        # Get the user's menu choice as a string.
+        choice = input("Choose an option: ")
 
-    if choice == "1":
-        # Add a new task. NEW: uses .strip() to clean the input.
-        name = input("Task name: ").strip()  # .strip() removes leading/trailing
-        # whitespace (spaces, tabs, newlines). This prevents tasks like "  "
-        # (just spaces) from being added. Without .strip(), a user who accidentally
-        # hits space would create an invisible task name.
+        if choice == "1":
+            # Add a new task. NEW: uses clean_task_name() to strip whitespace and
+            # reject blank input, instead of a plain .strip() call, so "  " (just
+            # spaces) can't sneak in as an invisible task name.
+            name = clean_task_name(input("Task name: "))
 
-        if name == "":  # Check if the name is empty after stripping whitespace.
-            # If the user typed nothing or just spaces, reject it.
-            print("Task name can't be empty.")
-        else:
-            # The name is valid, create the Task and save.
-            tasks.append(Task(name))
-
-            save_tasks(tasks)
-
-    elif choice == "2":
-        # List all tasks with numbers and checkboxes.
-        for i in range(len(tasks)):
-            tasks[i].display(i)
-
-    elif choice == "3":
-        # Mark a task complete. Show list, get valid index, mark done, save.
-        for i in range(len(tasks)):
-            tasks[i].display(i)
-
-        # Use safe input handling, returns None if input is bad.
-        index = get_valid_index(tasks, "Which task number to complete? ")
-
-        if index is not None:
-            tasks[index].complete()
-
-            save_tasks(tasks)
-
-    elif choice == "4":
-        # Mark a task incomplete. Show list, get valid index, uncomplete, save.
-        for i in range(len(tasks)):
-            tasks[i].display(i)
-
-        index = get_valid_index(tasks, "Which task number to mark incomplete? ")
-
-        if index is not None:
-            tasks[index].uncomplete()
-
-            save_tasks(tasks)
-
-    elif choice == "5":
-        # Edit a task name. Show list, get valid index, get new name, update, save.
-        for i in range(len(tasks)):
-            tasks[i].display(i)
-
-        index = get_valid_index(tasks, "Which task number to edit? ")
-
-        if index is not None:
-            new_name = input("New name: ").strip()  # .strip() cleans whitespace.
-
-            if new_name == "":  # Reject empty names after stripping.
+            if name is None:  # clean_task_name() returns None for blank input.
                 print("Task name can't be empty.")
             else:
-                # Update the task's name attribute directly.
-                tasks[index].name = new_name
+                # The name is valid, create the Task and save.
+                tasks.append(Task(name))
 
                 save_tasks(tasks)
 
-    elif choice == "6":
-        # Delete a task. Show list, get valid index, remove from list, save.
-        for i in range(len(tasks)):
-            tasks[i].display(i)
+        elif choice == "2":
+            # List all tasks with numbers and checkboxes.
+            for i in range(len(tasks)):
+                tasks[i].display(i)
 
-        index = get_valid_index(tasks, "Which task number to delete? ")
+        elif choice == "3":
+            # Mark a task complete. Show list, get valid index, mark done, save.
+            for i in range(len(tasks)):
+                tasks[i].display(i)
 
-        if index is not None:
-            # Remove the task at the given index from the list.
-            tasks.pop(index)
+            # Use safe input handling, returns None if input is bad.
+            index = get_valid_index(tasks, "Which task number to complete? ")
 
-            save_tasks(tasks)
+            if index is not None:
+                tasks[index].complete()
 
-    elif choice == "7":
-        # Quit: break exits the while True loop, ending the program.
-        break
+                save_tasks(tasks)
 
-    else:
-        # Invalid menu choice, remind the user.
-        print("Invalid option, try again.")
+        elif choice == "4":
+            # Mark a task incomplete. Show list, get valid index, uncomplete, save.
+            for i in range(len(tasks)):
+                tasks[i].display(i)
+
+            index = get_valid_index(tasks, "Which task number to mark incomplete? ")
+
+            if index is not None:
+                tasks[index].uncomplete()
+
+                save_tasks(tasks)
+
+        elif choice == "5":
+            # Edit a task name. Show list, get valid index, get new name, update, save.
+            for i in range(len(tasks)):
+                tasks[i].display(i)
+
+            index = get_valid_index(tasks, "Which task number to edit? ")
+
+            if index is not None:
+                new_name = clean_task_name(input("New name: "))
+
+                if new_name is None:  # Reject empty names after stripping.
+                    print("Task name can't be empty.")
+                else:
+                    # Update the task's name attribute directly.
+                    tasks[index].name = new_name
+
+                    save_tasks(tasks)
+
+        elif choice == "6":
+            # Delete a task. Show list, get valid index, remove from list, save.
+            for i in range(len(tasks)):
+                tasks[i].display(i)
+
+            index = get_valid_index(tasks, "Which task number to delete? ")
+
+            if index is not None:
+                # Remove the task at the given index from the list.
+                tasks.pop(index)
+
+                save_tasks(tasks)
+
+        elif choice == "7":
+            # Quit: break exits the while True loop, ending the program.
+            break
+
+        else:
+            # Invalid menu choice, remind the user.
+            print("Invalid option, try again.")
