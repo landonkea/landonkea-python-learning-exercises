@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Decide pre-release or stable from the tag name
+        id: channel
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+
+          # v1.2.0 is stable. v1.2.0-rc.1 or v1.2.0-pre.1 has a hyphen
+          # after the version number, same idea as a semantic-versioning
+          # pre-release suffix, and that hyphen is what marks it as a
+          # pre-release instead.
+          if [[ "$TAG" == *-* ]]; then
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+            echo "channel=pre-release" >> "$GITHUB_OUTPUT"
+          else
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+            echo "channel=stable" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          CHANNEL: ${{ steps.channel.outputs.channel }}
+          PRERELEASE: ${{ steps.channel.outputs.prerelease }}
+        run: |
+          FLAGS=(--title "$TAG ($CHANNEL)" --generate-notes)
+          if [ "$PRERELEASE" = "true" ]; then
+            FLAGS+=(--prerelease)
+          fi
+          gh release create "$TAG" "${FLAGS[@]}"
