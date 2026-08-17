@@ -19,3 +19,9 @@ jobs:
         run: |
           find . -name "*.py" -not -path "*/__pycache__/*" -print0 \
             | xargs -0 -n1 python3 -m py_compile
+
+      - name: Install pytest
+        run: pip install pytest
+
+      - name: Run tests
+        run: pytest tests/ -v
